@@ -18,7 +18,7 @@ const spotlightItems = [
 
 export function HeroSection() {
   return (
-    <section className="grid gap-12 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-24">
+    <section className="grid gap-12 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-13">
       <FadeIn className="space-y-8">
         <Pill label="Premium healthcare platform" />
         <div className="space-y-5">
