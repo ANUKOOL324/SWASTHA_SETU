@@ -40,7 +40,7 @@ export function PublicNavbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 px-4 pt-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
       <div
         className={cn(
           "mx-auto max-w-7xl rounded-[28px] border transition-all duration-300",
@@ -49,14 +49,18 @@ export function PublicNavbar() {
             : "border-transparent bg-white/72 backdrop-blur-md",
         )}
       >
-        <div className="flex flex-wrap items-center gap-4 px-6 py-4 sm:px-8 lg:px-10">
-          <a href="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--foreground)] text-white shadow-lg">
+        <div className="flex items-center gap-3 px-4 py-3 sm:flex-wrap sm:gap-4 sm:px-8 sm:py-4 lg:px-10">
+          <a href="/" className="min-w-0 flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[var(--foreground)] text-white shadow-lg sm:h-11 sm:w-11">
               <HeartPulse className="h-5 w-5" />
             </div>
-            <div>
-              <p className="text-base font-semibold tracking-tight text-[var(--foreground)]">Swasth Setu</p>
-              <p className="text-xs uppercase tracking-[0.24em] text-[var(--muted)]">Hospital coordination</p>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold tracking-tight text-[var(--foreground)] sm:text-base">
+                Swasth Setu
+              </p>
+              <p className="hidden text-[11px] uppercase tracking-[0.22em] text-[var(--muted)] sm:block">
+                Hospital coordination
+              </p>
             </div>
           </a>
 
@@ -72,8 +76,10 @@ export function PublicNavbar() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-3">
-            <EmergencyLauncher compact />
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            <div className="hidden sm:block">
+              <EmergencyLauncher compact />
+            </div>
 
             {isHydrated && isAuthenticated ? (
               <div className="hidden items-center gap-2 md:flex">
@@ -115,7 +121,7 @@ export function PublicNavbar() {
             <button
               type="button"
               onClick={() => setIsMenuOpen((current) => !current)}
-              className="inline-flex rounded-2xl border border-[var(--border)] bg-white p-2 text-[var(--foreground)] md:hidden"
+              className="inline-flex shrink-0 rounded-2xl border border-[var(--border)] bg-white p-2 text-[var(--foreground)] md:hidden"
               aria-label="Toggle navigation"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -124,10 +130,7 @@ export function PublicNavbar() {
         </div>
 
         {isMenuOpen ? (
-          <div className="border-t border-[var(--border)] px-6 py-4 md:hidden">
-            <div className="mb-4">
-              <EmergencyLauncher compact />
-            </div>
+          <div className="border-t border-[var(--border)] px-4 py-4 sm:px-6 md:hidden">
             <nav className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <a
