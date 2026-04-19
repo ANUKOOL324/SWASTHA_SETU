@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { AlertTriangle, Loader2, MapPin, Phone, Siren, Stethoscope, X } from "lucide-react";
 
 import { aiService } from "@/services";
@@ -14,6 +15,7 @@ interface EmergencyLauncherProps {
 }
 
 export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [problemDescription, setProblemDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -34,6 +36,10 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
   }, [result?.interpretation.priority]);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) {
       return;
     }
@@ -44,6 +50,21 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
   const resetState = () => {
@@ -100,9 +121,15 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
         Emergency
       </button>
 
-      {isOpen ? (
+      {isMounted && isOpen ? createPortal(
         <div className="fixed inset-0 z-[70] overflow-y-auto bg-[rgba(8,15,12,0.55)] backdrop-blur-sm">
-          <div className="flex min-h-full items-start justify-center p-3 sm:p-5 lg:p-8">
+          <button
+            type="button"
+            aria-label="Close emergency dialog backdrop"
+            onClick={closeModal}
+            className="absolute inset-0 h-full w-full cursor-default"
+          />
+          <div className="relative flex min-h-full items-start justify-center p-3 sm:p-5 lg:p-8">
             <div className="flex w-full max-w-5xl flex-col overflow-hidden rounded-[28px] border border-[rgba(255,255,255,0.45)] bg-[rgba(255,255,255,0.98)] shadow-[0_30px_90px_rgba(8,15,12,0.24)] max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-2.5rem)] lg:max-h-[calc(100dvh-4rem)] sm:rounded-[32px]">
               <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[var(--border)] bg-[rgba(255,255,255,0.96)] px-5 py-4 backdrop-blur-xl sm:px-8 sm:py-6">
                 <div>
@@ -311,7 +338,8 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   );
