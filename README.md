@@ -1,4 +1,4 @@
-# Swasth Setu( Hackathon Technovest 3.0)
+# Swasth Setu(Hackathon Technovest 3.0)
 
 AI-powered hospital, equipment, ambulance, and patient coordination platform.
 
