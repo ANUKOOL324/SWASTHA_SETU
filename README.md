@@ -88,6 +88,115 @@ This repository is structured as an MVP-first hackathon codebase, but the archit
 - Frontend deployment target: Vercel
 - Backend can be deployed separately on any Node.js-compatible platform
 
+## Project Workflow
+
+High-level view of how Swasth Setu fits together — users, frontend, backend, data, AI, and realtime updates.
+
+```mermaid
+flowchart TB
+    subgraph Users["Users"]
+        P["Patient / Public"]
+        H["Hospital Admin"]
+    end
+
+    subgraph Frontend["Next.js Frontend · client/"]
+        direction TB
+        LP["Public app<br/>Landing · Hospitals · Map · Issues · Emergency"]
+        PF["Patient feed"]
+        HD["Hospital dashboard<br/>Doctors · Equipment · Ambulances · Analytics"]
+        SC["Socket.IO client"]
+        ZS["Zustand stores · services layer"]
+    end
+
+    subgraph Backend["Express API · server/"]
+        direction TB
+        RT["REST routes / controllers"]
+        MW["Middleware<br/>Auth · RBAC · Upload · Errors"]
+        SV["Services<br/>Business logic"]
+        SK["Socket handlers"]
+        AIS["AI service"]
+    end
+
+    subgraph Data["Persistence & media"]
+        DB[("MongoDB<br/>Users · Hospitals · Doctors · Equipment<br/>Appointments · Issues · Reviews · Messages")]
+        CL["Cloudinary<br/>Images & attachments"]
+    end
+
+    subgraph AI["AI & semantic search"]
+        EMB["Hugging Face embeddings"]
+        LLM["OpenRouter LLM"]
+    end
+
+    P --> LP
+    P --> PF
+    H --> HD
+
+    LP --> ZS
+    PF --> ZS
+    HD --> ZS
+
+    ZS -->|"HTTP REST"| RT
+    SC <-->|"Realtime events"| SK
+
+    RT --> MW --> SV
+    SK --> SV
+
+    SV --> DB
+    SV --> CL
+    SV --> AIS
+
+    AIS --> EMB
+    AIS --> LLM
+    AIS --> DB
+```
+
+### Typical request flow
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant UI as Next.js UI
+    participant API as Express API
+    participant SVC as Service layer
+    participant DB as MongoDB
+    participant AI as AI service
+
+    User->>UI: Search hospital / book appointment / manage ops
+    UI->>API: REST request + JWT
+    API->>API: Auth & role middleware
+    API->>SVC: Controller delegates
+    alt Structured query
+        SVC->>DB: Filter / paginate / aggregate
+    else Semantic search or AI feature
+        SVC->>AI: Query or context
+        AI->>DB: Retrieve candidates / records
+        AI->>AI: Embed · score · generate
+    end
+    DB-->>SVC: Data
+    SVC-->>API: Result
+    API-->>UI: JSON response
+    UI-->>User: Updated screen
+
+    Note over UI,DB: Parallel realtime path
+    UI->>API: Socket.IO connect
+    API-->>UI: Chat · issues · appointments · notifications
+```
+
+### End-to-end care coordination flow
+
+```mermaid
+flowchart LR
+    A["Discover hospitals<br/>map · search · AI"] --> B["View details<br/>doctors · reviews"]
+    B --> C["Book appointment"]
+    B --> D["Raise issue / emergency"]
+    C --> E["Hospital admin<br/>dashboard"]
+    D --> E
+    E --> F["Manage doctors · beds · equipment · ambulances"]
+    F --> G["Cross-hospital network<br/>equipment requests"]
+    E --> H["Analytics & AI insights"]
+    B --> I["AI review summary<br/>assistant chat"]
+```
+
 ## Repository Structure
 
 ```text
