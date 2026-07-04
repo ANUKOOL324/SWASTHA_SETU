@@ -505,4 +505,6 @@ It should be viewed as a serious hackathon MVP with scalable architecture, not a
 
 ## License
 
-This repository currently has no explicit license file. Add one before public reuse if needed.
+This project is open source under the [MIT License](LICENSE).
+
+You're free to use, modify, and build on top of it — just keep the license notice if you reuse the code. Swasth Setu was built as a hackathon MVP, so use it as a starting point, not as production healthcare software without proper review.
