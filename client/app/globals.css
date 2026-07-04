@@ -20,7 +20,8 @@
   --hero-glow:
     radial-gradient(circle at top, rgba(13, 148, 136, 0.16), transparent 34%),
     radial-gradient(circle at 82% 16%, rgba(201, 109, 16, 0.08), transparent 24%);
-  --font-sans: "Aptos", "Segoe UI Variable", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-body), "Segoe UI Variable", "Helvetica Neue", Arial, sans-serif;
+  --text-lead: rgba(16, 35, 27, 0.78);
 }
 
 * {
@@ -38,9 +39,12 @@ body {
     linear-gradient(180deg, rgba(250, 252, 250, 0.98) 0%, rgba(235, 242, 238, 0.98) 100%),
     var(--hero-glow);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-body), "Segoe UI Variable", sans-serif;
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -80,6 +84,21 @@ input[type="reset"] {
 
 .text-balance {
   text-wrap: balance;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+.text-lead {
+  color: var(--text-lead);
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.012em;
 }
 
 .surface-card {

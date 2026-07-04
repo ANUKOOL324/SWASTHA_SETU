@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
+import { authButtonClassName, authInputClassName, authLabelClassName } from "@/components/auth/auth-fields";
 import { useAsyncTask, useAuth, useToast } from "@/hooks";
 import { getErrorMessage } from "@/lib/utils";
 import { authService } from "@/services";
@@ -56,7 +57,11 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
     return (
       <AuthShell
         title="Welcome back"
-        description="Sign in to continue with patient support or hospital operations."
+        description="Sign in to continue your care journey or hospital operations on Swasth Setu."
+        highlights={[
+          "Book appointments and track support requests",
+          "Open your hospital dashboard in one click",
+        ]}
         footer={null}
       >
         <p className="py-6 text-center text-sm text-[var(--muted)]">Verifying your session...</p>
@@ -67,7 +72,11 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
   return (
     <AuthShell
       title="Welcome back"
-      description="Sign in to continue with patient support or hospital operations."
+      description="Sign in to continue your care journey or hospital operations on Swasth Setu."
+      highlights={[
+        "Book appointments and track support requests",
+        "Open your hospital dashboard in one click",
+      ]}
       footer={
         <p>
           Don&apos;t have an account?{" "}
@@ -77,9 +86,9 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
         </p>
       }
     >
-      <form className="space-y-5" onSubmit={handleSubmit}>
+      <form className="space-y-3" onSubmit={handleSubmit}>
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="email">
+          <label className={authLabelClassName} htmlFor="email">
             Email
           </label>
           <input
@@ -88,13 +97,13 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             required
             value={form.email}
             onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="you@example.com"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="password">
+          <label className={authLabelClassName} htmlFor="password">
             Password
           </label>
           <input
@@ -103,18 +112,14 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             required
             value={form.password}
             onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="Enter your password"
           />
         </div>
 
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {error ? <p className="text-xs text-red-600">{error}</p> : null}
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="inline-flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--primary-strong)] disabled:cursor-not-allowed disabled:opacity-70"
-        >
+        <button type="submit" disabled={isLoading} className={authButtonClassName}>
           {isLoading ? "Signing in..." : "Sign in"}
         </button>
       </form>

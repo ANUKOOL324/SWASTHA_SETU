@@ -97,11 +97,16 @@ Hackathonn/
 |   |-- components/              # Reusable UI and feature components
 |   |-- hooks/                   # Shared React hooks
 |   |-- lib/                     # API helpers, utilities
+|   |-- public/                  # Static frontend assets (images, favicon, etc.)
 |   |-- services/                # Frontend service layer for backend APIs
 |   |-- socket/                  # Socket.IO client setup
 |   |-- store/                   # Zustand state stores
 |   |-- types/                   # Shared frontend types
-|   `-- public/                  # Static frontend assets if added
+|   |-- .env.example             # Frontend env template
+|   |-- next.config.ts           # Next.js config
+|   |-- postcss.config.mjs       # PostCSS / Tailwind config
+|   |-- package.json
+|   `-- tsconfig.json
 |
 |-- server/                      # Express backend
 |   |-- src/
@@ -114,10 +119,17 @@ Hackathonn/
 |   |   |-- services/            # Business logic
 |   |   |-- sockets/             # Realtime event handling
 |   |   |-- types/               # Backend-specific shared types
-|   |   `-- utils/               # Query builder, helpers, embedding text builders
-|   `-- dist/                    # Generated build output
+|   |   |-- utils/               # Query builder, helpers, embedding text builders
+|   |   |-- app.ts               # Express app wiring
+|   |   `-- server.ts            # HTTP server entry point
+|   |-- .env.example             # Backend env template
+|   |-- package.json
+|   `-- tsconfig.json
 |
+|-- .editorconfig                # Editor formatting defaults
+|-- .gitattributes               # Line-ending normalization
 |-- .gitignore
+|-- package.json                 # Root scripts (dev, build, install:all)
 `-- README.md
 ```
 
@@ -294,29 +306,25 @@ git clone <your-repo-url>
 cd Hackathonn
 ```
 
-### 2. Frontend setup
+### 2. Install dependencies
+
+From the repo root:
 
 ```bash
-cd client
-npm install
-npm run dev
+npm run setup
 ```
 
-Create `client/.env.local`:
+This installs root, client, and server dependencies in one step.
+
+### 3. Environment files
+
+Create `client/.env.local` from `client/.env.example`:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-### 3. Backend setup
-
-```bash
-cd server
-npm install
-npm run dev
-```
-
-Create `server/.env` using `server/.env.example` as the base.
+Create `server/.env` from `server/.env.example`.
 
 Typical backend values include:
 
@@ -328,22 +336,29 @@ Typical backend values include:
 - `CLOUDINARY_API_SECRET`
 - AI provider keys depending on the configured services
 
-### 4. Production build
+### 4. Run locally
 
-Frontend:
+From the repo root (starts client and server together):
 
 ```bash
-cd client
-npm run build
-npm run start
+npm run dev
 ```
 
-Backend:
+Or run each app separately:
 
 ```bash
-cd server
+npm run dev:client
+npm run dev:server
+```
+
+### 5. Production build
+
+From the repo root:
+
+```bash
 npm run build
-npm run start
+npm run start:server
+npm run start:client
 ```
 
 ## Demo Story
@@ -377,7 +392,7 @@ It should be viewed as a serious hackathon MVP with scalable architecture, not a
 
 - AI features are intentionally assistive, not mandatory for core flows
 - the app is designed to remain usable even if AI services fail
-- temporary local runtime folders such as `.next/`, `dist/`, `node_modules/`, and `tmp-runtime-logs/` are excluded from Git
+- build and dependency folders such as `.next/`, `dist/`, and `node_modules/` are excluded from Git
 
 ## License
 

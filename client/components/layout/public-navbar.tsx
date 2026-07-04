@@ -40,7 +40,7 @@ export function PublicNavbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
+    <header className="sticky top-0 z-40 px-3 pt-2 sm:px-6 sm:pt-3 lg:px-8">
       <div
         className={cn(
           "mx-auto max-w-7xl rounded-[28px] border transition-all duration-300",
@@ -49,7 +49,7 @@ export function PublicNavbar() {
             : "border-transparent bg-white/72 backdrop-blur-md",
         )}
       >
-        <div className="flex items-center gap-3 px-4 py-3 sm:flex-wrap sm:gap-4 sm:px-8 sm:py-4 lg:px-10">
+        <div className="flex items-center gap-3 px-4 py-2.5 sm:flex-wrap sm:gap-4 sm:px-8 sm:py-3.5 lg:px-10">
           <a href="/" className="min-w-0 flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[var(--foreground)] text-white shadow-lg sm:h-11 sm:w-11">
               <HeartPulse className="h-5 w-5" />
@@ -143,11 +143,16 @@ export function PublicNavbar() {
                   {link.label}
                 </a>
               ))}
+
+              <div className="sm:hidden [&>button]:min-h-11 [&>button]:w-full">
+                <EmergencyLauncher compact />
+              </div>
+
               {isHydrated && isAuthenticated ? (
                 <button
                   type="button"
                   onClick={() => { setIsMenuOpen(false); logout(); }}
-                  className="rounded-2xl px-3 py-2 text-left text-sm font-medium text-red-600 transition hover:bg-[rgba(16,35,27,0.04)]"
+                  className="inline-flex min-h-11 items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-sm font-semibold text-red-600 transition hover:border-red-400 hover:bg-red-50"
                 >
                   Logout
                 </button>
@@ -156,14 +161,14 @@ export function PublicNavbar() {
                   <a
                     href="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl border border-[var(--border)] px-3 py-2 text-center text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    className="inline-flex min-h-11 items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-center text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
                     Log in
                   </a>
                   <a
                     href="/register"
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl border border-[var(--border)] px-3 py-2 text-center text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)]"
+                    className="inline-flex min-h-11 items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-center text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
                     Register
                   </a>

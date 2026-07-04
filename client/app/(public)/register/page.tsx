@@ -3,19 +3,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Building2, ChevronDown, UserRound } from "lucide-react";
-
 import { AuthShell } from "@/components/auth/auth-shell";
+import { authButtonClassName, authInputClassName, authLabelClassName } from "@/components/auth/auth-fields";
+import { RolePicker } from "@/components/auth/role-picker";
 import { useAsyncTask, useAuth, useToast } from "@/hooks";
 import { getErrorMessage } from "@/lib/utils";
 import { authService } from "@/services";
 import { useAuthStore } from "@/store";
 import type { AuthResponse, UserRole } from "@/types";
-
-const roleOptions: Array<{ label: string; value: UserRole }> = [
-  { label: "Patient", value: "patient" },
-  { label: "Hospital Admin", value: "hospital_admin" },
-];
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -71,7 +66,12 @@ export default function RegisterPage() {
   return (
     <AuthShell
       title="Create your account"
-      description="Set up access for care discovery or hospital operations."
+      description="Set up your profile in under a minute and choose how you want to use Swasth Setu."
+      highlights={[
+        "Patient access for hospitals, booking, and care support",
+        "Hospital admin tools for beds, equipment, and ambulances",
+      ]}
+      formWidth="full"
       footer={
         <p>
           Already have an account?{" "}
@@ -81,9 +81,9 @@ export default function RegisterPage() {
         </p>
       }
     >
-      <form className="grid gap-5 sm:grid-cols-2" onSubmit={handleSubmit}>
-        <div className="sm:col-span-2">
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="name">
+      <form className="grid gap-3 sm:grid-cols-2" onSubmit={handleSubmit}>
+        <div className="col-span-full">
+          <label className={authLabelClassName} htmlFor="name">
             Full name
           </label>
           <input
@@ -91,13 +91,13 @@ export default function RegisterPage() {
             required
             value={form.name}
             onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="Your full name"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="email">
+          <label className={authLabelClassName} htmlFor="email">
             Email
           </label>
           <input
@@ -106,13 +106,13 @@ export default function RegisterPage() {
             required
             value={form.email}
             onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="you@example.com"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="phone">
+          <label className={authLabelClassName} htmlFor="phone">
             Phone
           </label>
           <input
@@ -120,13 +120,13 @@ export default function RegisterPage() {
             required
             value={form.phone}
             onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="+91..."
           />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="password">
+        <div className="col-span-full">
+          <label className={authLabelClassName} htmlFor="password">
             Password
           </label>
           <input
@@ -136,45 +136,19 @@ export default function RegisterPage() {
             required
             value={form.password}
             onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+            className={authInputClassName}
             placeholder="At least 6 characters"
           />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="role">
-            Role
-          </label>
-          <div className="relative">
-            <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--primary)]">
-              {form.role === "patient" ? <UserRound className="h-4 w-4" /> : <Building2 className="h-4 w-4" />}
-            </div>
-            <select
-              id="role"
-              value={form.role}
-              onChange={(event) =>
-                setForm((current) => ({ ...current, role: event.target.value as UserRole, hospitalName: "" }))
-              }
-              className="w-full appearance-none rounded-2xl border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,251,249,0.98))] py-3 pr-11 pl-11 outline-none transition focus:border-[var(--primary)] focus:shadow-[0_0_0_4px_rgba(15,118,110,0.08)]"
-            >
-              {roleOptions.map((role) => (
-                <option key={role.value} value={role.value}>
-                  {role.label}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)]">
-              <ChevronDown className="h-4 w-4" />
-            </div>
-          </div>
-          <p className="mt-1.5 text-xs text-[var(--muted)]">
-            Choose patient access or a hospital workspace.
-          </p>
-        </div>
+        <RolePicker
+          value={form.role}
+          onChange={(role) => setForm((current) => ({ ...current, role, hospitalName: "" }))}
+        />
 
         {form.role === "hospital_admin" ? (
-          <div className="sm:col-span-2">
-            <label className="mb-2 block text-sm font-medium text-[var(--foreground)]" htmlFor="hospitalName">
+          <div className="col-span-full">
+            <label className={authLabelClassName} htmlFor="hospitalName">
               Hospital name <span className="font-normal text-[var(--muted)]">(required)</span>
             </label>
             <input
@@ -184,23 +158,19 @@ export default function RegisterPage() {
               onChange={(event) =>
                 setForm((current) => ({ ...current, hospitalName: event.target.value }))
               }
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3 outline-none transition focus:border-[var(--primary)]"
+              className={authInputClassName}
               placeholder="e.g. City General Hospital"
             />
-            <p className="mt-1.5 text-xs text-[var(--muted)]">
+            <p className="mt-1 text-xs text-[var(--muted)]">
               A hospital will be created automatically and linked to your account.
             </p>
           </div>
         ) : null}
 
-        {error ? <p className="sm:col-span-2 text-sm text-red-600">{error}</p> : null}
+        {error ? <p className="col-span-full text-sm text-red-600">{error}</p> : null}
 
-        <div className="sm:col-span-2">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--primary-strong)] disabled:cursor-not-allowed disabled:opacity-70"
-          >
+        <div className="col-span-full pt-1">
+          <button type="submit" disabled={isLoading} className={authButtonClassName}>
             {isLoading ? "Creating account..." : "Create account"}
           </button>
         </div>

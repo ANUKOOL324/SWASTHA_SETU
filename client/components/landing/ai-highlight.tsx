@@ -24,30 +24,32 @@ const aiItems = [
 export function AiHighlight() {
   return (
     <FadeIn>
-      <div className="rounded-[24px] border border-[var(--border)] bg-white p-5 shadow-sm sm:rounded-[32px] sm:p-8">
+      <div className="rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-8">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[var(--primary)] sm:text-sm sm:tracking-[0.24em]">AI features highlight</p>
-          <h3 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--foreground)] sm:mt-4 sm:text-3xl">Helpful AI where it matters most</h3>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)] sm:text-xs sm:tracking-[0.24em]">AI features highlight</p>
+          <h3 className="font-display mt-3 text-2xl font-bold tracking-tight text-[var(--foreground)] sm:mt-4 sm:text-3xl">Helpful AI where it matters most</h3>
           <p className="mt-3 text-sm leading-7 text-[var(--muted)] sm:mt-4 sm:leading-8">
-            The platform uses AI to improve discovery, summarization, and assistance, but the product
-            remains usable even if AI services are unavailable during the hackathon demo.
+            AI improves discovery, summarization, and assistance across the platform — while every
+            core workflow keeps working independently, so care never waits on a model.
           </p>
         </div>
 
-        <div className="mt-6 grid gap-4 md:mt-8 md:grid-cols-3">
-          {aiItems.map((item) => {
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:mt-8 md:grid-cols-3">
+          {aiItems.map((item, index) => {
             const Icon = item.icon;
 
             return (
-              <InteractiveCard key={item.title}>
-                <div className="rounded-[20px] border border-[var(--border)] bg-[var(--background)] p-4 sm:rounded-[24px] sm:p-5">
-                  <div className="inline-flex rounded-2xl bg-[var(--primary-soft)] p-3 text-[var(--primary)]">
-                    <Icon className="h-5 w-5" />
+              <FadeIn key={item.title} delay={index * 0.08} className="h-full">
+                <InteractiveCard className="h-full">
+                  <div className="group h-full rounded-2xl border border-[var(--border)] bg-[var(--background)] p-3.5 transition-all duration-200 hover:border-[var(--primary)]/30 hover:bg-white sm:rounded-[24px] sm:p-5">
+                    <div className="inline-flex rounded-xl bg-[var(--primary-soft)] p-2.5 text-[var(--primary)] transition-transform duration-200 group-hover:scale-110 sm:rounded-2xl sm:p-3">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h4 className="font-display mt-3 text-base font-bold tracking-tight text-[var(--foreground)] sm:mt-4 sm:text-lg">{item.title}</h4>
+                    <p className="mt-1.5 text-[13px] leading-6 text-[var(--muted)] sm:mt-2 sm:text-sm sm:leading-7">{item.description}</p>
                   </div>
-                  <h4 className="mt-4 text-lg font-semibold text-[var(--foreground)]">{item.title}</h4>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)] sm:leading-7">{item.description}</p>
-                </div>
-              </InteractiveCard>
+                </InteractiveCard>
+              </FadeIn>
             );
           })}
         </div>

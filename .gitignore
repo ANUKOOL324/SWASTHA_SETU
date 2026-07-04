@@ -1,14 +1,47 @@
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
 .next/
-coverage/
-tmp-runtime-logs/
+out/
+build/
+
+# TypeScript
 *.tsbuildinfo
+
+# Logs
 *.log
-.env
-.env.*
-!.env.example
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Environment & secrets (keep .env.example files)
+.env
+.env.*
+!.env.example
+
+# Deployment
+.vercel/
+
+# Test / coverage
+coverage/
+
+# Caches
+.cache/
+.eslintcache
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+
+# Local runtime / scratch
+tmp-runtime-logs/
+tmp/
+uploads/

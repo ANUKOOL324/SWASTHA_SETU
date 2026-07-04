@@ -129,80 +129,90 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
             onClick={closeModal}
             className="absolute inset-0 h-full w-full cursor-default"
           />
-          <div className="relative flex min-h-full items-start justify-center p-3 sm:p-5 lg:p-8">
-            <div className="flex w-full max-w-5xl flex-col overflow-hidden rounded-[28px] border border-[rgba(255,255,255,0.45)] bg-[rgba(255,255,255,0.98)] shadow-[0_30px_90px_rgba(8,15,12,0.24)] max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-2.5rem)] lg:max-h-[calc(100dvh-4rem)] sm:rounded-[32px]">
-              <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[var(--border)] bg-[rgba(255,255,255,0.96)] px-5 py-4 backdrop-blur-xl sm:px-8 sm:py-6">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-600">Rapid triage</p>
-                  <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--foreground)] sm:text-2xl">
+          <div className="relative flex min-h-full items-end justify-center p-0 sm:items-start sm:p-4 lg:p-8">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="emergency-mode-title"
+              className="flex w-full max-w-5xl flex-col overflow-hidden rounded-t-[24px] border border-[rgba(255,255,255,0.45)] bg-[rgba(255,255,255,0.98)] shadow-[0_30px_90px_rgba(8,15,12,0.24)] max-h-[min(100dvh,920px)] sm:max-h-[calc(100dvh-2rem)] sm:rounded-[28px] lg:max-h-[calc(100dvh-4rem)] lg:rounded-[32px]"
+            >
+              <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-[var(--border)] bg-[rgba(255,255,255,0.96)] px-4 py-3.5 backdrop-blur-xl sm:gap-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
+                <div className="min-w-0 pr-1">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-rose-600 sm:text-xs sm:tracking-[0.22em]">
+                    Rapid triage
+                  </p>
+                  <h2
+                    id="emergency-mode-title"
+                    className="font-display mt-1.5 text-lg font-bold tracking-tight text-[var(--foreground)] sm:mt-2 sm:text-2xl"
+                  >
                     Emergency mode
                   </h2>
-                  <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
-                    Describe the situation and location. We will suggest the best hospital, likely equipment support,
-                    and the fastest contact path for the demo.
+                  <p className="mt-1.5 text-[13px] leading-6 text-[var(--muted)] sm:mt-2 sm:text-sm sm:leading-relaxed">
+                    Describe the situation and location. We will suggest the best hospital, equipment support,
+                    and the fastest contact path.
                   </p>
                 </div>
 
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="icon-button shrink-0 text-[var(--muted)] transition hover:text-[var(--foreground)]"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--muted)] transition hover:border-rose-300 hover:text-[var(--foreground)] sm:h-11 sm:w-11"
                   aria-label="Close emergency mode"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="overflow-y-auto px-5 py-5 sm:px-8 sm:py-6">
-                <form onSubmit={handleSubmit} className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                  <div className="grid gap-4">
-                <label className="grid gap-2">
-                  <span className="text-sm font-semibold text-[var(--foreground)]">Problem description</span>
-                  <textarea
-                    value={problemDescription}
-                    onChange={(event) => setProblemDescription(event.target.value)}
-                    rows={5}
-                    placeholder="Example: Severe breathing difficulty, patient may need oxygen and urgent ambulance support."
-                    className="min-h-[150px] rounded-3xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none transition focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
-                  />
-                </label>
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
+                <form onSubmit={handleSubmit} className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr] lg:gap-6">
+                  <div className="grid gap-3.5 sm:gap-4">
+                    <label className="grid gap-1.5 sm:gap-2">
+                      <span className="text-[13px] font-semibold text-[var(--foreground)] sm:text-sm">Problem description</span>
+                      <textarea
+                        value={problemDescription}
+                        onChange={(event) => setProblemDescription(event.target.value)}
+                        rows={4}
+                        placeholder="Example: Severe breathing difficulty, patient may need oxygen and urgent ambulance support."
+                        className="min-h-[112px] w-full resize-y rounded-2xl border border-[var(--border)] bg-white px-3.5 py-2.5 text-[13px] text-[var(--foreground)] outline-none transition focus:border-rose-300 focus:ring-4 focus:ring-rose-100 sm:min-h-[150px] sm:rounded-3xl sm:px-4 sm:py-3 sm:text-sm"
+                      />
+                    </label>
 
-                <label className="grid gap-2">
-                  <span className="text-sm font-semibold text-[var(--foreground)]">Location</span>
-                  <input
-                    value={location}
-                    onChange={(event) => setLocation(event.target.value)}
-                    placeholder="Area, city, state or coordinates like 28.6139, 77.2090"
-                    className="rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none transition focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
-                  />
-                </label>
+                    <label className="grid gap-1.5 sm:gap-2">
+                      <span className="text-[13px] font-semibold text-[var(--foreground)] sm:text-sm">Location</span>
+                      <input
+                        value={location}
+                        onChange={(event) => setLocation(event.target.value)}
+                        placeholder="Area, city, state or coordinates like 28.6139, 77.2090"
+                        className="min-h-11 w-full rounded-2xl border border-[var(--border)] bg-white px-3.5 py-2.5 text-[13px] text-[var(--foreground)] outline-none transition focus:border-rose-300 focus:ring-4 focus:ring-rose-100 sm:px-4 sm:py-3 sm:text-sm"
+                      />
+                    </label>
 
-                {error ? (
-                  <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-                    {error}
+                    {error ? (
+                      <div className="rounded-2xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-[13px] text-rose-700 sm:px-4 sm:py-3 sm:text-sm">
+                        {error}
+                      </div>
+                    ) : null}
+
+                    <div className="flex flex-col gap-2.5 min-[420px]:flex-row min-[420px]:flex-wrap sm:gap-3">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="btn-danger inline-flex min-h-11 w-full items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold min-[420px]:w-auto min-[420px]:flex-1 sm:min-h-12 sm:flex-none sm:min-w-[168px] sm:px-6 sm:py-3"
+                      >
+                        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Siren className="h-4 w-4" />}
+                        Find help now
+                      </button>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="btn-secondary inline-flex min-h-11 w-full items-center justify-center px-5 py-2.5 text-sm font-semibold min-[420px]:w-auto min-[420px]:flex-1 sm:min-h-12 sm:flex-none sm:min-w-[120px] sm:px-6 sm:py-3"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                ) : null}
 
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-danger btn-md"
-                  >
-                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Siren className="h-4 w-4" />}
-                    Find help now
-                  </button>
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    className="btn-secondary btn-md"
-                  >
-                    Cancel
-                  </button>
-                </div>
-                  </div>
-
-                  <div className="rounded-[24px] border border-[var(--border)] bg-[rgba(16,35,27,0.03)] p-4 sm:rounded-[28px] sm:p-5">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[rgba(16,35,27,0.03)] p-3.5 sm:rounded-[28px] sm:p-5">
                     {result ? (
                       <div className="grid gap-4">
                     <div className="rounded-[24px] border border-[var(--border)] bg-white p-4">
@@ -322,13 +332,15 @@ export function EmergencyLauncher({ compact = false }: EmergencyLauncherProps) {
                     ) : null}
                       </div>
                     ) : (
-                      <div className="flex h-full min-h-[260px] flex-col justify-center rounded-[24px] border border-dashed border-[var(--border)] bg-white/80 p-6 text-center sm:min-h-[340px]">
-                        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-700">
+                      <div className="flex min-h-[180px] flex-col justify-center rounded-2xl border border-dashed border-[var(--border)] bg-white/80 p-4 text-center sm:min-h-[280px] sm:rounded-[24px] sm:p-6 lg:min-h-[340px]">
+                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-50 text-rose-700 sm:h-12 sm:w-12">
                           <Stethoscope className="h-5 w-5" />
                         </div>
-                        <h3 className="mt-4 text-lg font-semibold text-[var(--foreground)]">Fast emergency guidance</h3>
-                        <p className="mt-2 text-sm text-[var(--muted)]">
-                          Submit the problem and location to get the best hospital recommendation, likely equipment
+                        <h3 className="font-display mt-3 text-base font-bold tracking-tight text-[var(--foreground)] sm:mt-4 sm:text-lg">
+                          Fast emergency guidance
+                        </h3>
+                        <p className="mt-1.5 text-[13px] leading-6 text-[var(--muted)] sm:mt-2 sm:text-sm sm:leading-relaxed">
+                          Submit the problem and location to get the best hospital recommendation, equipment
                           support, and direct contact details.
                         </p>
                       </div>

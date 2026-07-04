@@ -35,24 +35,24 @@ export function RoleCards() {
         const Icon = role.icon;
 
         return (
-          <FadeIn key={role.title} delay={index * 0.08}>
-            <InteractiveCard>
-              <article className="rounded-[24px] border border-[var(--border)] bg-white/90 p-5 shadow-sm sm:rounded-[30px] sm:p-7">
-                <div className="flex items-start gap-4 sm:items-center">
-                  <div className="rounded-2xl bg-[var(--foreground)]/6 p-3 text-[var(--primary)]">
-                    <Icon className="h-6 w-6" />
+          <FadeIn key={role.title} delay={index * 0.1} className="h-full">
+            <InteractiveCard className="h-full">
+              <article className="h-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 shadow-sm transition-all duration-200 hover:border-[var(--primary)]/30 hover:shadow-[0_18px_44px_rgba(15,118,110,0.12)] sm:rounded-[30px] sm:p-7">
+                <div className="flex items-start gap-3 sm:items-center sm:gap-4">
+                  <div className="shrink-0 rounded-xl bg-[var(--foreground)]/6 p-2.5 text-[var(--primary)] sm:rounded-2xl sm:p-3">
+                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[var(--muted)] sm:text-sm sm:tracking-[0.24em]">User role</p>
-                    <h3 className="text-xl font-semibold text-[var(--foreground)] sm:text-2xl">{role.title}</h3>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)] sm:text-xs sm:tracking-[0.24em]">User role</p>
+                    <h3 className="font-display text-lg font-bold tracking-tight text-[var(--foreground)] sm:text-2xl">{role.title}</h3>
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted)] sm:mt-5 sm:leading-7">{role.description}</p>
-                <div className="mt-5 space-y-3 sm:mt-6">
+                <p className="mt-3 text-[13px] leading-6 text-[var(--muted)] sm:mt-5 sm:text-sm sm:leading-7">{role.description}</p>
+                <div className="mt-4 space-y-2.5 sm:mt-6 sm:space-y-3">
                   {role.bullets.map((bullet) => (
-                    <div key={bullet} className="flex items-start gap-3">
-                      <div className="mt-2 h-2.5 w-2.5 rounded-full bg-[var(--primary)]" />
-                      <p className="text-sm leading-6 text-[var(--muted)] sm:leading-7">{bullet}</p>
+                    <div key={bullet} className="flex items-start gap-2.5 sm:gap-3">
+                      <div className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-[var(--primary)] sm:mt-2 sm:h-2.5 sm:w-2.5" />
+                      <p className="text-[13px] leading-6 text-[var(--muted)] sm:text-sm sm:leading-7">{bullet}</p>
                     </div>
                   ))}
                 </div>

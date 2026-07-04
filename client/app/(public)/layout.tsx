@@ -1,16 +1,9 @@
-import { PublicFooter } from "@/components/layout/public-footer";
-import { PublicNavbar } from "@/components/layout/public-navbar";
+import { PublicChrome } from "@/components/layout/public-chrome";
 
 export default function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div className="relative">
-      <PublicNavbar />
-      <main>{children}</main>
-      <PublicFooter />
-    </div>
-  );
+  return <PublicChrome>{children}</PublicChrome>;
 }

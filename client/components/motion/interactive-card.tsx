@@ -12,10 +12,10 @@ interface InteractiveCardProps {
 export function InteractiveCard({ children, className }: InteractiveCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.01 }}
-      whileTap={{ scale: 0.985, y: 0 }}
-      transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.7 }}
-      className={cn(className)}
+      whileHover={{ y: -6, scale: 1.015 }}
+      whileTap={{ scale: 0.98, y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22, mass: 0.6 }}
+      className={cn("will-change-transform", className)}
     >
       {children}
     </motion.div>
