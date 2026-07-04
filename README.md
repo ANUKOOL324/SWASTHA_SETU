@@ -483,20 +483,6 @@ A simple end-to-end demo flow for this project:
 7. Hospital admin searches equipment from another hospital
 8. Dashboard and AI insight cards show operational context
 
-## Project Status
-
-This repository is already beyond a simple scaffold. It includes:
-
-- working frontend structure and pages
-- modular backend architecture
-- REST APIs for the core modules
-- realtime plumbing
-- semantic search flows
-- dashboard analytics
-- AI-assisted features
-
-It should be viewed as a serious hackathon MVP with scalable architecture, not a finished production healthcare product.
-
 ## Notes
 
 - AI features are intentionally assistive, not mandatory for core flows
@@ -507,4 +493,3 @@ It should be viewed as a serious hackathon MVP with scalable architecture, not a
 
 This project is open source under the [MIT License](LICENSE).
 
-You're free to use, modify, and build on top of it — just keep the license notice if you reuse the code. Swasth Setu was built as a hackathon MVP, so use it as a starting point, not as production healthcare software without proper review.
