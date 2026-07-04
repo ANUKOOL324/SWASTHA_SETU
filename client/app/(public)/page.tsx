@@ -7,7 +7,7 @@ import { SectionShell } from "@/components/landing/section-shell";
 
 export default function LandingPage() {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col px-4 pb-10 pt-0 sm:px-8 sm:pb-14 sm:pt-1 lg:px-12">
+    <div className="mx-auto flex w-full max-w-7xl flex-col px-4 pb-10 pt-5 sm:px-8 sm:pb-14 sm:pt-6 lg:px-12 lg:pt-8">
       <HeroSection />
 
       <SectionShell

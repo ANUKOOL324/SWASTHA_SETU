@@ -19,7 +19,7 @@ const spotlightItems = [
 
 export function HeroSection() {
   return (
-    <section className="grid gap-6 pt-2 pb-8 sm:gap-8 sm:pt-4 sm:pb-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(320px,0.98fr)] lg:items-center lg:gap-10 lg:pt-5 lg:pb-12">
+    <section className="grid gap-6 pt-3 pb-8 sm:gap-8 sm:pt-4 sm:pb-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(320px,0.98fr)] lg:items-center lg:gap-10 lg:pt-5 lg:pb-12">
       <FadeIn className="space-y-4 sm:space-y-6">
         <div className="hidden sm:block">
           <Pill label="Connected healthcare network" />
