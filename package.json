@@ -6,10 +6,12 @@
   "scripts": {
     "setup": "npm install && npm run install:all",
     "install:all": "npm install --prefix client && npm install --prefix server",
+    "postinstall": "npm install --prefix client",
     "dev": "concurrently -n client,server -c cyan,magenta \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
     "dev:client": "npm run dev --prefix client",
     "dev:server": "npm run dev --prefix server",
-    "build": "npm run build --prefix server && npm run build --prefix client",
+    "build": "npm run build --prefix client",
+    "build:all": "npm run build --prefix server && npm run build --prefix client",
     "vercel-build": "npm run build --prefix client",
     "build:client": "npm run build --prefix client",
     "build:server": "npm run build --prefix server",
